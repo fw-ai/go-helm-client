@@ -217,7 +217,7 @@ func (c *HelmClient) UpdateChartRepos() error {
 // InstallOrUpgradeChart installs or upgrades the provided chart and returns the corresponding release.
 // Namespace and other context is provided via the helmclient.Options struct when instantiating a client.
 func (c *HelmClient) InstallOrUpgradeChart(ctx context.Context, spec *ChartSpec, opts *GenericHelmOptions) (*release.Release, error) {
-	exists, err := c.chartExists(spec)
+	exists, err := c.ChartExists(spec.Namespace, spec.ReleaseName)
 	if err != nil {
 		return nil, err
 	}
@@ -771,10 +771,9 @@ func (c *HelmClient) GetChart(chartName string, chartPathOptions *action.ChartPa
 	return helmChart, chartPath, err
 }
 
-// chartExists checks whether a chart is already installed
-// in a namespace or not based on the provided chart spec.
-// Note that this function only considers the contained chart name and namespace.
-func (c *HelmClient) chartExists(spec *ChartSpec) (bool, error) {
+// ChartExists checks whether a chart is already installed
+// in a namespace or not based on the provided namespace and release name.
+func (c *HelmClient) ChartExists(namespace, releaseName string) (bool, error) {
 	releases, err := c.listReleases(action.ListAll)
 	if err != nil {
 		return false, err
@@ -786,10 +785,10 @@ func (c *HelmClient) chartExists(spec *ChartSpec) (bool, error) {
 		}
 		return s
 	}
-	expectedNamespace := normalizeNamespace(spec.Namespace)
+	expectedNamespace := normalizeNamespace(namespace)
 
 	for _, r := range releases {
-		if r.Name == spec.ReleaseName && normalizeNamespace(r.Namespace) == expectedNamespace {
+		if r.Name == releaseName && normalizeNamespace(r.Namespace) == expectedNamespace {
 			return true, nil
 		}
 	}

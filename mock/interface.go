@@ -53,6 +53,21 @@ func (mr *MockClientMockRecorder) AddOrUpdateChartRepo(entry interface{}) *gomoc
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateChartRepo", reflect.TypeOf((*MockClient)(nil).AddOrUpdateChartRepo), entry)
 }
 
+// ChartExists mocks base method.
+func (m *MockClient) ChartExists(namespace, releaseName string) (bool, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ChartExists", namespace, releaseName)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ChartExists indicates an expected call of ChartExists.
+func (mr *MockClientMockRecorder) ChartExists(namespace, releaseName interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ChartExists", reflect.TypeOf((*MockClient)(nil).ChartExists), namespace, releaseName)
+}
+
 // GetChart mocks base method.
 func (m *MockClient) GetChart(chartName string, chartPathOptions *action.ChartPathOptions) (*chart.Chart, string, error) {
 	m.ctrl.T.Helper()
