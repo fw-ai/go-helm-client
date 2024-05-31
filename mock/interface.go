@@ -12,6 +12,8 @@ import (
 	gomock "github.com/golang/mock/gomock"
 	action "helm.sh/helm/v3/pkg/action"
 	chart "helm.sh/helm/v3/pkg/chart"
+	cli "helm.sh/helm/v3/pkg/cli"
+	getter "helm.sh/helm/v3/pkg/getter"
 	release "helm.sh/helm/v3/pkg/release"
 	repo "helm.sh/helm/v3/pkg/repo"
 )
@@ -84,6 +86,20 @@ func (mr *MockClientMockRecorder) GetChart(chartName, chartPathOptions interface
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetChart", reflect.TypeOf((*MockClient)(nil).GetChart), chartName, chartPathOptions)
 }
 
+// GetProviders mocks base method.
+func (m *MockClient) GetProviders() getter.Providers {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetProviders")
+	ret0, _ := ret[0].(getter.Providers)
+	return ret0
+}
+
+// GetProviders indicates an expected call of GetProviders.
+func (mr *MockClientMockRecorder) GetProviders() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetProviders", reflect.TypeOf((*MockClient)(nil).GetProviders))
+}
+
 // GetRelease mocks base method.
 func (m *MockClient) GetRelease(name string) (*release.Release, error) {
 	m.ctrl.T.Helper()
@@ -112,6 +128,20 @@ func (m *MockClient) GetReleaseValues(name string, allValues bool) (map[string]i
 func (mr *MockClientMockRecorder) GetReleaseValues(name, allValues interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetReleaseValues", reflect.TypeOf((*MockClient)(nil).GetReleaseValues), name, allValues)
+}
+
+// GetSettings mocks base method.
+func (m *MockClient) GetSettings() *cli.EnvSettings {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetSettings")
+	ret0, _ := ret[0].(*cli.EnvSettings)
+	return ret0
+}
+
+// GetSettings indicates an expected call of GetSettings.
+func (mr *MockClientMockRecorder) GetSettings() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSettings", reflect.TypeOf((*MockClient)(nil).GetSettings))
 }
 
 // InstallChart mocks base method.
@@ -215,6 +245,21 @@ func (m *MockClient) RollbackRelease(spec *helmclient.ChartSpec) error {
 func (mr *MockClientMockRecorder) RollbackRelease(spec interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RollbackRelease", reflect.TypeOf((*MockClient)(nil).RollbackRelease), spec)
+}
+
+// RunChartTests mocks base method.
+func (m *MockClient) RunChartTests(releaseName string) (bool, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RunChartTests", releaseName)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RunChartTests indicates an expected call of RunChartTests.
+func (mr *MockClientMockRecorder) RunChartTests(releaseName interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RunChartTests", reflect.TypeOf((*MockClient)(nil).RunChartTests), releaseName)
 }
 
 // SetDebugLog mocks base method.

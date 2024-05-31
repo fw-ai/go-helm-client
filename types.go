@@ -87,6 +87,14 @@ type HelmClient struct {
 	DebugLog     action.DebugLog
 }
 
+func (c *HelmClient) GetSettings() *cli.EnvSettings {
+	return c.Settings
+}
+
+func (c *HelmClient) GetProviders() getter.Providers {
+	return c.Providers
+}
+
 type GenericHelmOptions struct {
 	PostRenderer postrender.PostRenderer
 	RollBack     RollBack
@@ -180,10 +188,15 @@ type ChartSpec struct {
 	// DryRun indicates whether to perform a dry run.
 	// +optional
 	DryRun bool `json:"dryRun,omitempty"`
+	// DryRunOption controls whether the operation is prepared, but not executed with options on whether or not to interact with the remote cluster.
+	DryRunOption string `json:"dryRunOption,omitempty"`
 	// Description specifies a custom description for the uninstalled release
 	// +optional
 	Description string `json:"description,omitempty"`
 	// KeepHistory indicates whether to retain or purge the release history during uninstall
 	// +optional
 	KeepHistory bool `json:"keepHistory,omitempty"`
+	// Labels specifies a set of labels to be applied to the release
+	// +optional
+	Labels map[string]string `json:"labels,omitempty"`
 }
